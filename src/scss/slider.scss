@@ -1,0 +1,150 @@
+@import './variables.scss';
+
+$slider-height: 45px;
+$slider-height-sm: 40px;
+$dragger-size: 24px;
+$track-height: 8px;
+
+.slider {
+  position: relative;
+  height: $slider-height;
+  width: 100%;
+  display: flex;
+
+  @media (max-width: $sm-breakpoint) {
+    height: $slider-height-sm;
+  }
+}
+
+.slider__track {
+  width: 100%;
+  height: $track-height;
+  border-radius: 100px;
+  background-color: #cacaca;
+  top: 50%;
+  position: relative;
+  transform: translateY(-$track-height/2);
+  z-index: 2;
+  overflow: hidden;
+}
+
+.slider__range {
+  background: #1091cc;
+  height: $track-height;
+  width: 0;
+}
+
+.slider__dragger {
+  cursor: grabbing;
+  position: absolute;
+  width: $dragger-size;
+  height: $dragger-size;
+  top: 50%;
+  left: 0;
+  transform: translateY(-1 * $dragger-size/2);
+  z-index: 3;
+  border-radius: 100%;
+  background-color: #ffffff;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.27);
+}
+
+.slider__label {
+  color: #3e3d3f;
+  height: $slider-height;
+  line-height: $slider-height;
+  width: 29px;
+  flex: 0 0 29px;
+  text-align: center;
+  opacity: 0.8;
+  font-family: HelveticaNeue;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  letter-spacing: 0.3px;
+  color: #3e3d3f;
+
+  @media (max-width: $sm-breakpoint) {
+    height: $slider-height-sm;
+    line-height: $slider-height-sm;
+  }
+}
+
+.slider__label--min {
+  text-align: left;
+}
+
+.slider__content {
+  width: 100%;
+  position: relative;
+}
+
+.slider__label--max {
+  text-align: right;
+}
+
+// ----------------------------------------
+
+// input[type='range'] {
+//   &::-webkit-slider-thumb {
+//     -webkit-appearance: none;
+//   }
+
+//   &:focus {
+//     outline: none;
+//   }
+// }
+
+// input[type='range'] {
+//   -webkit-appearance: none;
+//   margin: 18px 0;
+//   width: 100%;
+//   background-image: -webkit-gradient(
+//     linear,
+//     0% 0%,
+//     100% 0%,
+//     color-stop(0.435897, rgb(16, 145, 204)),
+//     color-stop(0.435897, rgb(216, 216, 216))
+//   );
+// }
+// /* Special styling for WebKit/Blink */
+// input[type='range']::-webkit-slider-thumb {
+//   -webkit-appearance: none;
+//   border: 1px solid #000000;
+//   height: $dragger-size;
+//   width: $dragger-size;
+//   border-radius: 100%;
+//   background: #ffffff;
+//   cursor: pointer;
+//   margin-top: -$dragger-size / 2;
+//   box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d; /* Add cool effects to your sliders! */
+// }
+
+// input[type='range']::-webkit-slider-runnable-track {
+//   width: 100%;
+//   height: 8.4px;
+//   cursor: pointer;
+//   box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+//   ///background: #3071a9;
+//   border-radius: 1.3px;
+//   border: 0.2px solid #010101;
+// }
+
+// input[type='range']:focus::-webkit-slider-runnable-track {
+//   /// background: #367ebd;
+// }
+
+// input[type='range']::-webkit-slider-runnable-track {
+//   width: 100%;
+//   height: 8.4px;
+//   cursor: pointer;
+//   animate: 0.2s;
+//   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.27);
+//   //background: #3071a9;
+//   border-radius: 1.3px;
+//   border: 0.2px solid #010101;
+// }
+
+// input[type='range']:focus::-webkit-slider-runnable-track {
+//   //background: #367ebd;
+// }

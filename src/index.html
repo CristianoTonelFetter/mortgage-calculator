@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <link rel="stylesheet" href="./css/main.css" />
+
+    <title>Mortgage Calculator - ConsumerAffairs</title>
+  </head>
+  <body>
+    <main class="container">
+      <header class="header">
+        <h1 class="title title--1st">Mortgage Calculator</h1>
+        <hr class="separator" />
+      </header>
+
+      <div class="calculator">
+        <div class="calculator__box">
+          <div class="content-box__header">
+            <h4 class="title title--4th">
+              Change values to calculate your results
+            </h4>
+
+            <hr class="separator" />
+          </div>
+
+          <form id="calculator-form" method="get" novalidate>
+            <div class="form-group">
+              <div class="form-control">
+                <label class="form-control__label" for="">Years of mortgage</label>
+
+                <div class="flex-container">
+                  <div class="slider right-spaced" id="range-slider-1">
+                    <div class="slider__label slider__label--min"></div>
+
+                    <div class="slider__content">
+                      <div class="slider__dragger"></div>
+
+                      <div class="slider__track">
+                        <div class="slider__range"></div>
+                      </div>
+                    </div>
+
+                    <div class="slider__label slider__label--max"></div>
+                  </div>
+
+                  <input
+                    type="number"
+                    id="yearsOfMortgage"
+                    name="yearsOfMortgage"
+                    class="field field--tiny field--centered"
+                    value="1"
+                    readonly
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="form-control">
+                <label for="" class="form-control__label">Rate of interest (%)</label>
+
+                <div class="flex-container">
+                  <div class="slider right-spaced" id="range-slider-2">
+                    <div class="slider__label slider__label--min"></div>
+
+                    <div class="slider__content">
+                      <div class="slider__dragger"></div>
+                      <div class="slider__track">
+                        <div class="slider__range"></div>
+                      </div>
+                    </div>
+
+                    <div class="slider__label slider__label--max"></div>
+                  </div>
+
+                  <input
+                    type="number"
+                    class="field field--tiny field--centered"
+                    id="rateOfInterest"
+                    name="rateOfInterest"
+                    value="0.1"
+                    readonly
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="form-control form-control--vmb">
+                <label for="" class="form-control__label">Loan Amount</label>
+
+                <input
+                  type="number"
+                  step="1"
+                  class="field field--currency"
+                  name="loanAmount"
+                  id="loanAmount"
+                  required
+                />
+
+                <div class="validation-text">
+                  <span class="visible-lg">Loan Amount is mandatory</span>
+                  <span class="visible-sm">Mandatory filed</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group form-group--grid">
+              <div class="form-group__col form-group__col--half">
+                <div class="form-control">
+                  <label class="form-control__label">Annual Tax</label>
+
+                  <input
+                    type="number"
+                    class="field field--currency"
+                    id="annualTax"
+                    name="annualTax"
+                    required
+                  />
+
+                  <div class="validation-text">
+                    <span class="visible-lg">Annual Tax is mandatory</span>
+                    <span class="visible-sm">Mandatory filed</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group__col form-group__col--half">
+                <div class="form-control">
+                  <label class="form-control__label">Annual Insurance</label>
+                  <input
+                    type="number"
+                    class="field field--currency"
+                    id="annualInsurance"
+                    name="annualInsurance"
+                    required
+                  />
+                  <div class="validation-text">
+                    <span class="visible-lg">Annual Insurance is mandatory</span>
+                    <span class="visible-sm">Mandatory filed</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="btn-holder">
+              <button type="submit" class="btn">
+                Calculate
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <div class="result-box" id="calculator-result">
+          <div class="result-box__content">
+            <h2 class="title title--2nd">Your results</h2>
+            <div>
+              <div class="result-box__item">
+                <h5 class="title title--5th">Principle & Interest</h5>
+                <div class="result-box__value">$ <span id="principle-and-interest">- -</span></div>
+              </div>
+              <hr class="separator visible-sm" />
+              <div class="result-box__item">
+                <h5 class="title title--5th">Tax</h5>
+                <div class="result-box__value">$ <span id="tax">- -</span></div>
+              </div>
+              <hr class="separator visible-sm" />
+              <div class="result-box__item">
+                <h5 class="title title--5th">Insurance</h5>
+                <div class="result-box__value">$ <span id="insurance">- -</span></div>
+              </div>
+              <hr class="separator" />
+              <div class="result-box__item result-box__item--last">
+                <h3 class="title title--3rd">Total Monthly Payment</h3>
+                <div class="result-box__value">$ <span id="total-monthly-payment">- -</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="./js/index.js"></script>
+  </body>
+</html>
