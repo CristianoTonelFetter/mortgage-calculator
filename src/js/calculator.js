@@ -1,8 +1,8 @@
 /**
  * Principle & Interest:
- * @param {number} interestRate - Element selector
- * @param {number} loanAmount - Drag callback
- * @param {number} yearsOfMortgage - Minimum limit
+ * @param {number} interestRate
+ * @param {number} loanAmount
+ * @param {number} yearsOfMortgage
  * @return {number}
  */
 function PrincipleAndInterest(interestRate, loanAmount, yearsOfMortgage) {
@@ -41,4 +41,4 @@ function MonthlyPayment(principleAndInterests, tax, insurance) {
   return principleAndInterests + tax + insurance;
 }
 
-exports = { PrincipleAndInterest, Tax, Insurance, MonthlyPayment };
+module.exports = { PrincipleAndInterest, Tax, Insurance, MonthlyPayment };

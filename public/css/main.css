@@ -401,8 +401,8 @@ input {
   width: 300px;
   min-height: 440px;
   background-color: #eaf6fa;
-  -webkit-transition: 0.4s height linear;
-  transition: 0.4s height linear;
+  -webkit-transition: 0.3s height linear;
+  transition: 0.3s height linear;
 }
 
 .result-box .separator {
