@@ -225,6 +225,14 @@ function sliders() {
     document.querySelector('#insurance').innerHTML = insurance.toFixed(2);
     document.querySelector('#total-monthly-payment').innerHTML = MonthlyPayment(principleAndInterests, tax, insurance).toFixed(2); // expanding box
 
-    document.querySelector('#calculator-result').classList.add('result-box--expanded');
+    var calculatorResult = document.querySelector('#calculator-result');
+    calculatorResult.classList.add('result-box--expanded'); // scroll to element
+
+    setTimeout(function () {
+      calculatorResult.scrollIntoView({
+        top: calculatorResult.offsetTop,
+        behavior: 'smooth'
+      });
+    }, 300);
   }, false);
 })();

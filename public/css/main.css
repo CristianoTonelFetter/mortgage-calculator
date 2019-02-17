@@ -401,8 +401,8 @@ input {
   width: 300px;
   min-height: 440px;
   background-color: #eaf6fa;
-  -webkit-transition: 0.4s height linear, 0.4s opacity linear;
-  transition: 0.4s height linear, 0.4s opacity linear;
+  -webkit-transition: 0.4s height linear;
+  transition: 0.4s height linear;
 }
 
 .result-box .separator {
@@ -494,7 +494,7 @@ input {
 @media (max-width: 820px) {
   .result-box__value {
     font-size: 14px;
-    font-weight: bold;
+    font-weight: normal;
     line-height: normal;
     text-align: right;
     color: #3e3d3f;
@@ -513,6 +513,7 @@ input {
 @media (max-width: 820px) {
   .result-box__item--last .result-box__value {
     line-height: normal;
+    font-size: 18px;
   }
 }
 

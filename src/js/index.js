@@ -235,7 +235,16 @@ function sliders() {
       ).toFixed(2);
 
       // expanding box
-      document.querySelector('#calculator-result').classList.add('result-box--expanded');
+      const calculatorResult = document.querySelector('#calculator-result');
+      calculatorResult.classList.add('result-box--expanded');
+
+      // scroll to element
+      setTimeout(() => {
+        calculatorResult.scrollIntoView({
+          top: calculatorResult.offsetTop,
+          behavior: 'smooth'
+        });
+      }, 300);
     },
     false
   );

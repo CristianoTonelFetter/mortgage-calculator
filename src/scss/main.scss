@@ -310,7 +310,7 @@ input {
   width: 300px;
   min-height: 440px;
   background-color: #eaf6fa;
-  transition: 0.4s height linear, 0.4s opacity linear;
+  transition: 0.4s height linear;
   .separator {
     margin-bottom: 20px;
   }
@@ -379,7 +379,7 @@ input {
 
   @media (max-width: $sm-breakpoint) {
     font-size: 14px;
-    font-weight: bold;
+    font-weight: normal;
     line-height: normal;
     text-align: right;
     color: $dark;
@@ -396,6 +396,7 @@ input {
   @media (max-width: $sm-breakpoint) {
     .result-box__value {
       line-height: normal;
+      font-size: 18px;
     }
   }
 }
