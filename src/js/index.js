@@ -1,47 +1,4 @@
 /**
- * Principle & Interest:
- * @param {number} interestRate - Element selector
- * @param {number} loanAmount - Drag callback
- * @param {number} yearsOfMortgage - Minimum limit
- * @return {number}
- */
-function PrincipleAndInterest(interestRate, loanAmount, yearsOfMortgage) {
-  return (
-    ((interestRate / 100 / 12) * loanAmount) /
-    (1 - (1 + interestRate / 100 / 12) ** (-yearsOfMortgage * 12))
-  );
-}
-
-/**
- * Tax
- * @param {number} annualTax
- * @return {number}
- */
-function Tax(annualTax) {
-  return annualTax / 12;
-}
-
-/**
- * Insurance
- * @param {number} annualInsurance
- * @return {number}
- */
-function Insurance(annualInsurance) {
-  return annualInsurance / 12;
-}
-
-/**
- * Monthly payment
- * @param {number} principleAndInterests
- * @param {number} tax
- * @param {number} insurance
- * @return {number}
- */
-function MonthlyPayment(principleAndInterests, tax, insurance) {
-  return principleAndInterests + tax + insurance;
-}
-
-/**
  * Range slider component
  * @param {string} selector - Element selector
  * @param {function} onDrag - Drag callback
@@ -224,58 +181,62 @@ function sliders() {
   });
 }
 
-// init sliders
-window.addEventListener('load', function load() {
-  sliders();
-});
+(function init() {
+  // init sliders
+  window.addEventListener('load', function load() {
+    sliders();
+  });
 
-window.addEventListener('resize', function resize() {
-  sliders();
-});
+  window.addEventListener('resize', function resize() {
+    sliders();
+  });
 
-// form submit
-document.getElementById('calculator-form').addEventListener(
-  'submit',
-  e => {
-    e.preventDefault();
+  // form submit
+  document.getElementById('calculator-form').addEventListener(
+    'submit',
+    e => {
+      e.preventDefault();
 
-    const form = e.target;
-    let isValid = true;
+      const form = e.target;
+      let isValid = true;
 
-    // validation
-    form.querySelectorAll('input[required]').forEach(field => {
-      if (!field.value) {
-        field.parentElement.classList.add('form-control--error');
-        isValid = false;
-      } else {
-        field.parentElement.classList.remove('form-control--error');
-      }
-    });
+      // validation
+      form.querySelectorAll('input[required]').forEach(field => {
+        if (!field.value) {
+          field.parentElement.classList.add('form-control--error');
+          isValid = false;
+        } else {
+          field.parentElement.classList.remove('form-control--error');
+        }
+      });
 
-    // form is invalid, return
-    if (!isValid) return;
+      // form is invalid, return
+      if (!isValid) return;
 
-    const yearsOfMortgage = document.querySelector('#yearsOfMortgage').value;
-    const interestRate = document.querySelector('#rateOfInterest').value;
-    const loanAmount = document.querySelector('#loanAmount').value;
-    const annualTax = document.querySelector('#annualTax').value;
-    const annualInsurance = document.querySelector('#annualInsurance').value;
+      const yearsOfMortgage = document.querySelector('#yearsOfMortgage').value;
+      const interestRate = document.querySelector('#rateOfInterest').value;
+      const loanAmount = document.querySelector('#loanAmount').value;
+      const annualTax = document.querySelector('#annualTax').value;
+      const annualInsurance = document.querySelector('#annualInsurance').value;
 
-    const tax = Tax(annualTax);
-    const insurance = Insurance(annualInsurance);
-    const principleAndInterests = PrincipleAndInterest(interestRate, loanAmount, yearsOfMortgage);
+      const tax = Tax(annualTax);
+      const insurance = Insurance(annualInsurance);
+      const principleAndInterests = PrincipleAndInterest(interestRate, loanAmount, yearsOfMortgage);
 
-    document.querySelector('#principle-and-interest').innerHTML = principleAndInterests.toFixed(2);
-    document.querySelector('#tax').innerHTML = tax.toFixed(2);
-    document.querySelector('#insurance').innerHTML = insurance.toFixed(2);
-    document.querySelector('#total-monthly-payment').innerHTML = MonthlyPayment(
-      principleAndInterests,
-      tax,
-      insurance
-    ).toFixed(2);
+      document.querySelector('#principle-and-interest').innerHTML = principleAndInterests.toFixed(
+        2
+      );
+      document.querySelector('#tax').innerHTML = tax.toFixed(2);
+      document.querySelector('#insurance').innerHTML = insurance.toFixed(2);
+      document.querySelector('#total-monthly-payment').innerHTML = MonthlyPayment(
+        principleAndInterests,
+        tax,
+        insurance
+      ).toFixed(2);
 
-    // expanding box
-    document.querySelector('#calculator-result').classList.add('result-box--expanded');
-  },
-  false
-);
+      // expanding box
+      document.querySelector('#calculator-result').classList.add('result-box--expanded');
+    },
+    false
+  );
+})();

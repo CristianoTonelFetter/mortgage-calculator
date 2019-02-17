@@ -2,7 +2,7 @@ const gulp = require('gulp');
 const sass = require('gulp-sass');
 const babel = require('gulp-babel');
 const connect = require('gulp-connect');
-// const browserify = require('browserify');
+const browserify = require('browserify');
 const autoprefixer = require('gulp-autoprefixer');
 
 const paths = {
@@ -34,16 +34,6 @@ const options = {
 };
 
 gulp.task('sass', () => {
-  return gulp
-    .src(paths.sass.src)
-    .pipe(sass(options.sass).on('error', sass.logError))
-    .pipe(autoprefixer(options.autoprefixer))
-    .pipe(gulp.dest(paths.sass.dest))
-    .pipe(connect.reload());
-});
-
-gulp.task('browserfy', () => {
-  // file.contents = browserify(file.path, {debug: true}).bundle();
   return gulp
     .src(paths.sass.src)
     .pipe(sass(options.sass).on('error', sass.logError))
