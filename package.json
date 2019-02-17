@@ -4,12 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "gulp",
-    "": ""
+    "test": "mocha"
   },
   "keywords": [],
-  "author": "",
+  "author": "Cristiano Tonel Fetter <tonel@devgrid.co.uk>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CristianoTonelFetter/ca_fe_test.git"
+  },
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.2.2",

@@ -146,24 +146,23 @@ function rangeSlider({ selector, onDrag, min, max, step, fieldSelector, value })
     dragging = false;
   }
 
-  function adjustKnobPosition(knobPosition) {
+  function moveKnob(knobPosition) {
     // set knob left offset
     knob.style.left = `${knobPosition}px`;
 
     // range indicator width
-    range.style.width = `${knobPosition + knob.offsetWidth}px`;
+    range.style.width = `${knobPosition + knob.offsetWidth / 2}px`;
   }
 
   function moving(e) {
     if (dragging) {
       const knobPosition = calculateKnobPosition(e);
 
+      moveKnob(knobPosition);
+
       // final value
       let sliderValue = (max * ((knobPosition * 100) / getLimitRight())) / 100;
-
       sliderValue = limitValue(formatValue(sliderValue));
-
-      adjustKnobPosition(knobPosition);
 
       if (field) {
         field.value = sliderValue;
@@ -201,14 +200,13 @@ function rangeSlider({ selector, onDrag, min, max, step, fieldSelector, value })
     if (minLabel) minLabel.innerHTML = min;
     if (maxLabel) maxLabel.innerHTML = max;
 
-    adjustKnobPosition(position);
+    moveKnob(position);
   }
 
   init();
 }
 
-// init sliders
-window.addEventListener('load', function load() {
+function sliders() {
   rangeSlider({
     selector: '#range-slider-1',
     min: 1,
@@ -224,6 +222,15 @@ window.addEventListener('load', function load() {
     step: 0.1,
     fieldSelector: '#rateOfInterest'
   });
+}
+
+// init sliders
+window.addEventListener('load', function load() {
+  sliders();
+});
+
+window.addEventListener('resize', function resize() {
+  sliders();
 });
 
 // form submit
@@ -258,7 +265,6 @@ document.getElementById('calculator-form').addEventListener(
     const insurance = Insurance(annualInsurance);
     const principleAndInterests = PrincipleAndInterest(interestRate, loanAmount, yearsOfMortgage);
 
-    // .remove('form-control--error')
     document.querySelector('#principle-and-interest').innerHTML = principleAndInterests.toFixed(2);
     document.querySelector('#tax').innerHTML = tax.toFixed(2);
     document.querySelector('#insurance').innerHTML = insurance.toFixed(2);
@@ -268,6 +274,7 @@ document.getElementById('calculator-form').addEventListener(
       insurance
     ).toFixed(2);
 
+    // expanding box
     document.querySelector('#calculator-result').classList.add('result-box--expanded');
   },
   false

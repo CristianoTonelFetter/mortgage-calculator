@@ -163,20 +163,20 @@ function rangeSlider(_ref) {
     dragging = false;
   }
 
-  function adjustKnobPosition(knobPosition) {
+  function moveKnob(knobPosition) {
     // set knob left offset
     knob.style.left = "".concat(knobPosition, "px"); // range indicator width
 
-    range.style.width = "".concat(knobPosition + knob.offsetWidth, "px");
+    range.style.width = "".concat(knobPosition + knob.offsetWidth / 2, "px");
   }
 
   function moving(e) {
     if (dragging) {
-      var knobPosition = calculateKnobPosition(e); // final value
+      var knobPosition = calculateKnobPosition(e);
+      moveKnob(knobPosition); // final value
 
       var sliderValue = max * (knobPosition * 100 / getLimitRight()) / 100;
       sliderValue = limitValue(formatValue(sliderValue));
-      adjustKnobPosition(knobPosition);
 
       if (field) {
         field.value = sliderValue;
@@ -209,14 +209,13 @@ function rangeSlider(_ref) {
     var position = initialValue === min ? 0 : initialValue * 100 / max / 100 * getLimitRight();
     if (minLabel) minLabel.innerHTML = min;
     if (maxLabel) maxLabel.innerHTML = max;
-    adjustKnobPosition(position);
+    moveKnob(position);
   }
 
   init();
-} // init sliders
+}
 
-
-window.addEventListener('load', function load() {
+function sliders() {
   rangeSlider({
     selector: '#range-slider-1',
     min: 1,
@@ -231,6 +230,14 @@ window.addEventListener('load', function load() {
     step: 0.1,
     fieldSelector: '#rateOfInterest'
   });
+} // init sliders
+
+
+window.addEventListener('load', function load() {
+  sliders();
+});
+window.addEventListener('resize', function resize() {
+  sliders();
 }); // form submit
 
 document.getElementById('calculator-form').addEventListener('submit', function (e) {
@@ -255,11 +262,11 @@ document.getElementById('calculator-form').addEventListener('submit', function (
   var annualInsurance = document.querySelector('#annualInsurance').value;
   var tax = Tax(annualTax);
   var insurance = Insurance(annualInsurance);
-  var principleAndInterests = PrincipleAndInterest(interestRate, loanAmount, yearsOfMortgage); // .remove('form-control--error')
-
+  var principleAndInterests = PrincipleAndInterest(interestRate, loanAmount, yearsOfMortgage);
   document.querySelector('#principle-and-interest').innerHTML = principleAndInterests.toFixed(2);
   document.querySelector('#tax').innerHTML = tax.toFixed(2);
   document.querySelector('#insurance').innerHTML = insurance.toFixed(2);
-  document.querySelector('#total-monthly-payment').innerHTML = MonthlyPayment(principleAndInterests, tax, insurance).toFixed(2);
+  document.querySelector('#total-monthly-payment').innerHTML = MonthlyPayment(principleAndInterests, tax, insurance).toFixed(2); // expanding box
+
   document.querySelector('#calculator-result').classList.add('result-box--expanded');
 }, false);

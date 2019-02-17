@@ -14,7 +14,8 @@ npm install
 
 ### Running
 
-Just open public/index.html on Google Chrome or any browser of your choice
+Option 1: Just open public/index.html on Google Chrome or any browser of your choice
+Option 2:
 
 ### Testing
 
