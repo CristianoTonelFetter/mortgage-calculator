@@ -1,3 +1,5 @@
+/* eslint no-undef: 0 */
+
 const assert = require('assert');
 const { PrincipleAndInterest, Tax, Insurance, MonthlyPayment } = require('../src/js/mortgage');
 
