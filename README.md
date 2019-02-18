@@ -10,6 +10,12 @@ All source files are in `src/` folder.
 
 Just open `public/index.html` on your browser.
 
+### Testing
+
+```
+npm run test
+```
+
 ### Development mode
 
 Installing dependencies is required on `development` mode.
@@ -29,12 +35,6 @@ gulp
 ```
 
 then open http://localhost:8080 on your browser.
-
-### Testing
-
-```
-npm run test
-```
 
 ## Built With
 
