@@ -46,7 +46,7 @@ Preset `env`
 
 ## Built With
 
-- [Gulp](http://www.dropwizard.io/1.0.2/docs/) - The web framework used.
+- [Gulp](https://gulpjs.com/) - Automate and enhance your workflow
 - [Browserify](http://browserify.org/) - Module bundler.
 - [Sass](https://sass-lang.com/) - CSS with superpowers.
 - [Babel](https://babeljs.io/) - JS transpiler (preset-env).
