@@ -235,9 +235,17 @@ var slider2 = new RangeSlider({
     slider1.init();
     slider2.init();
   });
+  var resizeThrottle = false;
+  var resizeDelay = 30;
   window.addEventListener('resize', function resize() {
-    slider1.moveKnob();
-    slider2.moveKnob();
+    if (!resizeThrottle) {
+      slider1.moveKnob();
+      slider2.moveKnob();
+      resizeThrottle = true;
+      setTimeout(function () {
+        resizeThrottle = false;
+      }, resizeDelay);
+    }
   }); // form submit
 
   document.getElementById('calculator-form').addEventListener('submit', function (e) {

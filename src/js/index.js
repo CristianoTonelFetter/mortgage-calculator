@@ -203,9 +203,19 @@ const slider2 = new RangeSlider({
     slider2.init();
   });
 
+  let resizeThrottle = false;
+  const resizeDelay = 30;
   window.addEventListener('resize', function resize() {
-    slider1.moveKnob();
-    slider2.moveKnob();
+    if (!resizeThrottle) {
+      slider1.moveKnob();
+      slider2.moveKnob();
+
+      resizeThrottle = true;
+
+      setTimeout(() => {
+        resizeThrottle = false;
+      }, resizeDelay);
+    }
   });
 
   // form submit
