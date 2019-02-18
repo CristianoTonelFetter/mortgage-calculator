@@ -1,5 +1,11 @@
 "use strict";
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
 /**
  * Range slider component
  * @param {string} selector - Element selector
@@ -9,192 +15,229 @@
  * @param {number} step - Slider step
  * @param {number} value - Initial value
  */
-function rangeSlider(_ref) {
-  var selector = _ref.selector,
-      onDrag = _ref.onDrag,
-      min = _ref.min,
-      max = _ref.max,
-      step = _ref.step,
-      fieldSelector = _ref.fieldSelector,
-      value = _ref.value;
-  var dragging = false;
-  var knobOffset = 0;
-  var slider = document.querySelector(selector);
-  var track = slider.querySelector('.slider__content');
-  var knob = track.querySelector('.slider__dragger');
-  var range = track.querySelector('.slider__range');
-  var minLabel = slider.querySelector('.slider__label--min');
-  var maxLabel = slider.querySelector('.slider__label--max');
-  var field = document.querySelector(fieldSelector);
+var RangeSlider =
+/*#__PURE__*/
+function () {
+  function RangeSlider(_ref) {
+    var selector = _ref.selector,
+        onDrag = _ref.onDrag,
+        min = _ref.min,
+        max = _ref.max,
+        step = _ref.step,
+        fieldSelector = _ref.fieldSelector,
+        value = _ref.value;
+
+    _classCallCheck(this, RangeSlider);
+
+    this.dragging = false;
+    this.knobOffset = 0;
+    this.slider = document.querySelector(selector);
+    this.track = this.slider.querySelector('.slider__content');
+    this.knob = this.track.querySelector('.slider__dragger');
+    this.range = this.track.querySelector('.slider__range');
+    this.minLabel = this.slider.querySelector('.slider__label--min');
+    this.maxLabel = this.slider.querySelector('.slider__label--max');
+    this.field = document.querySelector(fieldSelector);
+    this.onDrag = onDrag;
+    this.min = min;
+    this.max = max;
+    this.step = step;
+    this.value = value;
+    this.touchEvents = ['touchmove', 'touchstart', 'touchend']; // bindings
+
+    this.getClientX = this.getClientX.bind(this);
+    this.dragStart = this.dragStart.bind(this);
+    this.getLimitRight = this.getLimitRight.bind(this);
+    this.limitValue = this.limitValue.bind(this);
+    this.getKnobPosition = this.getKnobPosition.bind(this);
+    this.getSliderValue = this.getSliderValue.bind(this);
+    this.formatValue = this.formatValue.bind(this);
+    this.dragStart = this.dragStart.bind(this);
+    this.dragEnd = this.dragEnd.bind(this);
+    this.moveKnob = this.moveKnob.bind(this);
+    this.moving = this.moving.bind(this);
+    this.addListeners = this.addListeners.bind(this);
+    this.init = this.init.bind(this);
+  }
   /**
    * Mouse position
    * @param {object} event - Event object
    * @return {number} - pixels
    */
 
-  function getClientX(event) {
-    var touchEvents = ['touchmove', 'touchstart', 'touchend'];
-    return touchEvents.includes(event.type) ? event.touches[0].clientX : event.clientX;
-  }
-  /**
-   * Right limit in pixels
-   * @param {void}
-   * @return {number}
-   */
 
-
-  function getLimitRight() {
-    return track.offsetWidth - knob.offsetWidth;
-  }
-  /**
-   * Limit value
-   * @param {number} sliderValue - Slider final value
-   * @return {number}
-   */
-
-
-  function limitValue(sliderValue) {
-    var limitedValue = sliderValue;
-
-    if (sliderValue < min) {
-      limitedValue = min;
-    } else if (sliderValue > max) {
-      limitedValue = max;
+  _createClass(RangeSlider, [{
+    key: "getClientX",
+    value: function getClientX(event) {
+      return this.touchEvents.includes(event.type) ? event.touches[0].clientX : event.clientX;
     }
+    /**
+     * Right limit in pixels
+     * @param {void}
+     * @return {number}
+     */
 
-    return limitedValue;
-  }
-  /**
-   * Calculate knob position
-   * @param {object} event - Event object
-   * @return {number} - pixels
-   */
-
-
-  function calculateKnobPosition(e) {
-    var clientX;
-
-    if (!e) {
-      clientX = knob.offsetLeft;
-    } else {
-      clientX = getClientX(e);
-    } // current knob position
-
-
-    var knobPosition = clientX - knobOffset; // limiting knob position
-
-    if (knobPosition < 0) {
-      knobPosition = 0;
-    } else if (knobPosition > getLimitRight()) {
-      knobPosition = getLimitRight();
+  }, {
+    key: "getLimitRight",
+    value: function getLimitRight() {
+      return this.track.offsetWidth - this.knob.offsetWidth;
     }
+    /**
+     * Limit value
+     * @param {number} sliderValue - Slider final value
+     * @return {number}
+     */
 
-    return knobPosition;
-  }
+  }, {
+    key: "limitValue",
+    value: function limitValue(sliderValue) {
+      var limitedValue = sliderValue;
 
-  function formatValue(sliderValue) {
-    var formattedValue = sliderValue;
+      if (sliderValue < this.min) {
+        limitedValue = this.min;
+      } else if (sliderValue > this.max) {
+        limitedValue = this.max;
+      }
 
-    if (step % 1 === 0) {
-      // integer
-      formattedValue = Math.ceil(sliderValue);
-    } else {
-      // float
-      formattedValue = parseFloat(sliderValue.toFixed(1));
+      return limitedValue;
     }
+    /**
+     * Calculate knob position
+     * @param {object} event - Event object
+     * @return {number} - pixels
+     */
 
-    return formattedValue;
-  }
+  }, {
+    key: "getKnobPosition",
+    value: function getKnobPosition(event) {
+      var clientX;
 
-  function dragStart(e) {
-    if (e.cancelable) {
-      e.preventDefault();
+      if (!event) {
+        clientX = this.knob.offsetLeft;
+      } else {
+        clientX = this.getClientX(event);
+      } // current knob position
+
+
+      var knobPosition = clientX - this.knobOffset; // limiting knob position
+
+      if (knobPosition < 0) {
+        knobPosition = 0;
+      } else if (knobPosition > this.getLimitRight()) {
+        knobPosition = this.getLimitRight();
+      }
+
+      return knobPosition;
     }
+  }, {
+    key: "formatValue",
+    value: function formatValue(sliderValue) {
+      var formattedValue = sliderValue;
 
-    knobOffset = getClientX(e) - knob.offsetLeft;
-    dragging = true;
-  }
+      if (this.step % 1 === 0) {
+        // integer
+        formattedValue = Math.ceil(sliderValue);
+      } else {
+        // float
+        formattedValue = parseFloat(sliderValue.toFixed(1));
+      }
 
-  function dragEnd() {
-    dragging = false;
-  }
+      return formattedValue;
+    }
+  }, {
+    key: "dragStart",
+    value: function dragStart(event) {
+      if (event.cancelable) {
+        event.preventDefault();
+      }
 
-  function moveKnob(knobPosition) {
-    // set knob left offset
-    knob.style.left = "".concat(knobPosition, "px"); // range indicator width
+      this.knobOffset = this.getClientX(event) - this.knob.offsetLeft;
+      this.dragging = true;
+    }
+  }, {
+    key: "dragEnd",
+    value: function dragEnd() {
+      this.dragging = false;
+    }
+  }, {
+    key: "moveKnob",
+    value: function moveKnob() {
+      var slideValue = parseInt(this.field.value, 10);
+      var knobPosition = slideValue === this.min ? 0 : slideValue * 100 / this.max / 100 * this.getLimitRight(); // set knob left offset
 
-    range.style.width = "".concat(knobPosition + knob.offsetWidth / 2, "px");
-  }
+      this.knob.style.left = "".concat(knobPosition, "px"); // range indicator width
 
-  function moving(e) {
-    if (dragging) {
-      var knobPosition = calculateKnobPosition(e);
-      moveKnob(knobPosition); // final value
+      this.range.style.width = "".concat(knobPosition + this.knob.offsetWidth / 2, "px");
+    }
+  }, {
+    key: "getSliderValue",
+    value: function getSliderValue(knobPosition) {
+      var sliderValue = this.max * (knobPosition * 100 / this.getLimitRight()) / 100;
+      sliderValue = this.limitValue(this.formatValue(sliderValue));
+      return sliderValue;
+    }
+  }, {
+    key: "moving",
+    value: function moving(event) {
+      if (this.dragging) {
+        this.moveKnob(); // final value
 
-      var sliderValue = max * (knobPosition * 100 / getLimitRight()) / 100;
-      sliderValue = limitValue(formatValue(sliderValue));
+        var knobPosition = this.getKnobPosition(event);
+        var sliderValue = this.getSliderValue(knobPosition);
+        this.field.value = sliderValue; // callback
 
-      if (field) {
-        field.value = sliderValue;
-      } // callback
-
-
-      if (typeof onDrag === 'function') {
-        onDrag(sliderValue);
+        if (typeof onDrag === 'function') {
+          this.onDrag(sliderValue);
+        }
       }
     }
-  }
-
-  function addListeners() {
-    track.addEventListener('mousedown', dragStart, false);
-    track.addEventListener('touchstart', dragStart, false);
-    window.addEventListener('mousemove', moving, false);
-    window.addEventListener('touchmove', moving, false);
-    window.addEventListener('mouseup', dragEnd, false);
-    window.addEventListener('touchend', dragEnd, false);
-  }
-
-  function init() {
-    addListeners();
-    var initialValue = value;
-
-    if (field) {
-      initialValue = parseInt(field.value, 10);
+  }, {
+    key: "addListeners",
+    value: function addListeners() {
+      this.track.addEventListener('mousedown', this.dragStart, false);
+      this.track.addEventListener('touchstart', this.dragStart, false);
+      window.addEventListener('mousemove', this.moving, false);
+      window.addEventListener('touchmove', this.moving, false);
+      window.addEventListener('mouseup', this.dragEnd, false);
+      window.addEventListener('touchend', this.dragEnd, false);
     }
+  }, {
+    key: "init",
+    value: function init() {
+      this.addListeners();
+      if (this.minLabel) this.minLabel.innerHTML = this.min;
+      if (this.maxLabel) this.maxLabel.innerHTML = this.max;
+      this.moveKnob();
+    }
+  }]);
 
-    var position = initialValue === min ? 0 : initialValue * 100 / max / 100 * getLimitRight();
-    if (minLabel) minLabel.innerHTML = min;
-    if (maxLabel) maxLabel.innerHTML = max;
-    moveKnob(position);
-  }
+  return RangeSlider;
+}();
 
-  init();
-}
-
-function sliders() {
-  rangeSlider({
-    selector: '#range-slider-1',
-    min: 1,
-    max: 40,
-    step: 1,
-    fieldSelector: '#yearsOfMortgage'
-  });
-  rangeSlider({
-    selector: '#range-slider-2',
-    min: 0.1,
-    max: 10,
-    step: 0.1,
-    fieldSelector: '#rateOfInterest'
-  });
-}
+var slider1 = new RangeSlider({
+  selector: '#range-slider-1',
+  min: 1,
+  max: 40,
+  step: 1,
+  fieldSelector: '#yearsOfMortgage'
+});
+var slider2 = new RangeSlider({
+  selector: '#range-slider-2',
+  min: 0.1,
+  max: 10,
+  step: 0.1,
+  fieldSelector: '#rateOfInterest'
+});
 
 (function init() {
   // init sliders
   window.addEventListener('load', function load() {
-    sliders();
+    slider1.init();
+    slider2.init();
   });
   window.addEventListener('resize', function resize() {
-    sliders();
+    slider1.moveKnob();
+    slider2.moveKnob();
   }); // form submit
 
   document.getElementById('calculator-form').addEventListener('submit', function (e) {
@@ -226,7 +269,7 @@ function sliders() {
     document.querySelector('#total-monthly-payment').innerHTML = MonthlyPayment(principleAndInterests, tax, insurance).toFixed(2); // expanding box
 
     var calculatorResult = document.querySelector('#calculator-result');
-    calculatorResult.classList.add('result-box--expanded'); // scroll to element
+    calculatorResult.classList.add('result-box--expanded'); // scroll to result box
 
     setTimeout(function () {
       calculatorResult.scrollIntoView({

@@ -2,25 +2,33 @@
 
 A Mortgage Calculator made with Javascript, CSS and HTML.
 
-## Getting Started
+## Source files
 
-### Installing
+You will find the source files in `src/` folder.
 
-Dependencies
+### Install
+
+Installing dependencies is only required on `dev` mode.
 
 ```
 npm install
 ```
 
+```
+npm run dev
+```
+
 ### Running
 
-Option 1: Just open public/index.html on Google Chrome or any browser of your choice
-Option 2:
+Option 1: Just open public/index.html on your browser.
+Option 2: On terminal, run `npm run dev`, then open http://localhost:8080 on your browser.
 
 ### Testing
 
 ```
 npm run test
 ```
+
+## Eslint
 
 ### Known issues

@@ -2,7 +2,7 @@ const assert = require('assert');
 const { PrincipleAndInterest, Tax, Insurance, MonthlyPayment } = require('../src/js/calculator');
 
 describe('Mortgage Calculator Tests', () => {
-  it('PrincipleAndInterest', () => {
+  it('Should calculate Principle And Interest correctly', () => {
     const interestRate = 0.8;
     const loanAmount = 100000;
     const yearsOfMortgage = 30;
@@ -13,19 +13,19 @@ describe('Mortgage Calculator Tests', () => {
     );
   });
 
-  it('Tax', () => {
+  it('Should calculate Tax correctly', () => {
     const annualTax = 12;
 
     assert.equal(Tax(annualTax), 1);
   });
 
-  it('Insurance', () => {
+  it('Should calculate Insurance correctly', () => {
     const annualInsurance = 300;
 
     assert.equal(Insurance(annualInsurance), 25);
   });
 
-  it('MonthlyPayment', () => {
+  it('Should calculate Monthly Payment correctly', () => {
     const principleAndInterests = 733.27;
     const tax = 83.33;
     const insurance = 25;

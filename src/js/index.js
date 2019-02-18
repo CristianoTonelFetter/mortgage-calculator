@@ -7,25 +7,47 @@
  * @param {number} step - Slider step
  * @param {number} value - Initial value
  */
-function rangeSlider({ selector, onDrag, min, max, step, fieldSelector, value }) {
-  let dragging = false;
-  let knobOffset = 0;
-  const slider = document.querySelector(selector);
-  const track = slider.querySelector('.slider__content');
-  const knob = track.querySelector('.slider__dragger');
-  const range = track.querySelector('.slider__range');
-  const minLabel = slider.querySelector('.slider__label--min');
-  const maxLabel = slider.querySelector('.slider__label--max');
-  const field = document.querySelector(fieldSelector);
+class RangeSlider {
+  constructor({ selector, onDrag, min, max, step, fieldSelector, value }) {
+    this.dragging = false;
+    this.knobOffset = 0;
+    this.slider = document.querySelector(selector);
+    this.track = this.slider.querySelector('.slider__content');
+    this.knob = this.track.querySelector('.slider__dragger');
+    this.range = this.track.querySelector('.slider__range');
+    this.minLabel = this.slider.querySelector('.slider__label--min');
+    this.maxLabel = this.slider.querySelector('.slider__label--max');
+    this.field = document.querySelector(fieldSelector);
+    this.onDrag = onDrag;
+    this.min = min;
+    this.max = max;
+    this.step = step;
+    this.value = value;
+    this.touchEvents = ['touchmove', 'touchstart', 'touchend'];
+
+    // bindings
+    this.getClientX = this.getClientX.bind(this);
+    this.dragStart = this.dragStart.bind(this);
+    this.getLimitRight = this.getLimitRight.bind(this);
+    this.limitValue = this.limitValue.bind(this);
+    this.getKnobPosition = this.getKnobPosition.bind(this);
+    this.getSliderValue = this.getSliderValue.bind(this);
+    this.formatValue = this.formatValue.bind(this);
+    this.dragStart = this.dragStart.bind(this);
+    this.dragEnd = this.dragEnd.bind(this);
+    this.moveKnob = this.moveKnob.bind(this);
+    this.moving = this.moving.bind(this);
+    this.addListeners = this.addListeners.bind(this);
+    this.init = this.init.bind(this);
+  }
 
   /**
    * Mouse position
    * @param {object} event - Event object
    * @return {number} - pixels
    */
-  function getClientX(event) {
-    const touchEvents = ['touchmove', 'touchstart', 'touchend'];
-    return touchEvents.includes(event.type) ? event.touches[0].clientX : event.clientX;
+  getClientX(event) {
+    return this.touchEvents.includes(event.type) ? event.touches[0].clientX : event.clientX;
   }
 
   /**
@@ -33,8 +55,8 @@ function rangeSlider({ selector, onDrag, min, max, step, fieldSelector, value })
    * @param {void}
    * @return {number}
    */
-  function getLimitRight() {
-    return track.offsetWidth - knob.offsetWidth;
+  getLimitRight() {
+    return this.track.offsetWidth - this.knob.offsetWidth;
   }
 
   /**
@@ -42,12 +64,12 @@ function rangeSlider({ selector, onDrag, min, max, step, fieldSelector, value })
    * @param {number} sliderValue - Slider final value
    * @return {number}
    */
-  function limitValue(sliderValue) {
+  limitValue(sliderValue) {
     let limitedValue = sliderValue;
-    if (sliderValue < min) {
-      limitedValue = min;
-    } else if (sliderValue > max) {
-      limitedValue = max;
+    if (sliderValue < this.min) {
+      limitedValue = this.min;
+    } else if (sliderValue > this.max) {
+      limitedValue = this.max;
     }
     return limitedValue;
   }
@@ -57,31 +79,31 @@ function rangeSlider({ selector, onDrag, min, max, step, fieldSelector, value })
    * @param {object} event - Event object
    * @return {number} - pixels
    */
-  function calculateKnobPosition(e) {
+  getKnobPosition(event) {
     let clientX;
 
-    if (!e) {
-      clientX = knob.offsetLeft;
+    if (!event) {
+      clientX = this.knob.offsetLeft;
     } else {
-      clientX = getClientX(e);
+      clientX = this.getClientX(event);
     }
 
     // current knob position
-    let knobPosition = clientX - knobOffset;
+    let knobPosition = clientX - this.knobOffset;
 
     // limiting knob position
     if (knobPosition < 0) {
       knobPosition = 0;
-    } else if (knobPosition > getLimitRight()) {
-      knobPosition = getLimitRight();
+    } else if (knobPosition > this.getLimitRight()) {
+      knobPosition = this.getLimitRight();
     }
 
     return knobPosition;
   }
 
-  function formatValue(sliderValue) {
+  formatValue(sliderValue) {
     let formattedValue = sliderValue;
-    if (step % 1 === 0) {
+    if (this.step % 1 === 0) {
       // integer
       formattedValue = Math.ceil(sliderValue);
     } else {
@@ -91,104 +113,99 @@ function rangeSlider({ selector, onDrag, min, max, step, fieldSelector, value })
     return formattedValue;
   }
 
-  function dragStart(e) {
-    if (e.cancelable) {
-      e.preventDefault();
+  dragStart(event) {
+    if (event.cancelable) {
+      event.preventDefault();
     }
-    knobOffset = getClientX(e) - knob.offsetLeft;
-    dragging = true;
+    this.knobOffset = this.getClientX(event) - this.knob.offsetLeft;
+    this.dragging = true;
   }
 
-  function dragEnd() {
-    dragging = false;
+  dragEnd() {
+    this.dragging = false;
   }
 
-  function moveKnob(knobPosition) {
+  moveKnob() {
+    const slideValue = parseInt(this.field.value, 10);
+
+    const knobPosition =
+      slideValue === this.min ? 0 : ((slideValue * 100) / this.max / 100) * this.getLimitRight();
+
     // set knob left offset
-    knob.style.left = `${knobPosition}px`;
+    this.knob.style.left = `${knobPosition}px`;
 
     // range indicator width
-    range.style.width = `${knobPosition + knob.offsetWidth / 2}px`;
+    this.range.style.width = `${knobPosition + this.knob.offsetWidth / 2}px`;
   }
 
-  function moving(e) {
-    if (dragging) {
-      const knobPosition = calculateKnobPosition(e);
+  getSliderValue(knobPosition) {
+    let sliderValue = (this.max * ((knobPosition * 100) / this.getLimitRight())) / 100;
+    sliderValue = this.limitValue(this.formatValue(sliderValue));
+    return sliderValue;
+  }
 
-      moveKnob(knobPosition);
+  moving(event) {
+    if (this.dragging) {
+      this.moveKnob();
 
       // final value
-      let sliderValue = (max * ((knobPosition * 100) / getLimitRight())) / 100;
-      sliderValue = limitValue(formatValue(sliderValue));
+      const knobPosition = this.getKnobPosition(event);
+      const sliderValue = this.getSliderValue(knobPosition);
 
-      if (field) {
-        field.value = sliderValue;
-      }
+      this.field.value = sliderValue;
 
       // callback
       if (typeof onDrag === 'function') {
-        onDrag(sliderValue);
+        this.onDrag(sliderValue);
       }
     }
   }
 
-  function addListeners() {
-    track.addEventListener('mousedown', dragStart, false);
-    track.addEventListener('touchstart', dragStart, false);
-
-    window.addEventListener('mousemove', moving, false);
-    window.addEventListener('touchmove', moving, false);
-
-    window.addEventListener('mouseup', dragEnd, false);
-    window.addEventListener('touchend', dragEnd, false);
+  addListeners() {
+    this.track.addEventListener('mousedown', this.dragStart, false);
+    this.track.addEventListener('touchstart', this.dragStart, false);
+    window.addEventListener('mousemove', this.moving, false);
+    window.addEventListener('touchmove', this.moving, false);
+    window.addEventListener('mouseup', this.dragEnd, false);
+    window.addEventListener('touchend', this.dragEnd, false);
   }
 
-  function init() {
-    addListeners();
+  init() {
+    this.addListeners();
 
-    let initialValue = value;
+    if (this.minLabel) this.minLabel.innerHTML = this.min;
+    if (this.maxLabel) this.maxLabel.innerHTML = this.max;
 
-    if (field) {
-      initialValue = parseInt(field.value, 10);
-    }
-    const position =
-      initialValue === min ? 0 : ((initialValue * 100) / max / 100) * getLimitRight();
-
-    if (minLabel) minLabel.innerHTML = min;
-    if (maxLabel) maxLabel.innerHTML = max;
-
-    moveKnob(position);
+    this.moveKnob();
   }
-
-  init();
 }
 
-function sliders() {
-  rangeSlider({
-    selector: '#range-slider-1',
-    min: 1,
-    max: 40,
-    step: 1,
-    fieldSelector: '#yearsOfMortgage'
-  });
+const slider1 = new RangeSlider({
+  selector: '#range-slider-1',
+  min: 1,
+  max: 40,
+  step: 1,
+  fieldSelector: '#yearsOfMortgage'
+});
 
-  rangeSlider({
-    selector: '#range-slider-2',
-    min: 0.1,
-    max: 10,
-    step: 0.1,
-    fieldSelector: '#rateOfInterest'
-  });
-}
+const slider2 = new RangeSlider({
+  selector: '#range-slider-2',
+  min: 0.1,
+  max: 10,
+  step: 0.1,
+  fieldSelector: '#rateOfInterest'
+});
 
 (function init() {
   // init sliders
   window.addEventListener('load', function load() {
-    sliders();
+    slider1.init();
+    slider2.init();
   });
 
   window.addEventListener('resize', function resize() {
-    sliders();
+    slider1.moveKnob();
+    slider2.moveKnob();
   });
 
   // form submit
@@ -238,7 +255,7 @@ function sliders() {
       const calculatorResult = document.querySelector('#calculator-result');
       calculatorResult.classList.add('result-box--expanded');
 
-      // scroll to element
+      // scroll to result box
       setTimeout(() => {
         calculatorResult.scrollIntoView({
           top: calculatorResult.offsetTop,

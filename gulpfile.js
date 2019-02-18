@@ -58,17 +58,19 @@ gulp.task('scripts', () => {
 });
 
 gulp.task('html', () => {
-  return gulp
-    .src(paths.html.src)
-    .pipe(gulp.dest(paths.html.dest))
-    .pipe(connect.reload());
+  return (
+    gulp
+      .src(paths.html.dest)
+      // .pipe(gulp.dest(paths.html.dest))
+      .pipe(connect.reload())
+  );
 });
 
 gulp.task(
   'watch:html',
   () =>
     new Promise(resolve => {
-      gulp.watch(paths.html.src, gulp.series('html'));
+      gulp.watch(paths.html.dest, gulp.series('html'));
       resolve();
     })
 );
