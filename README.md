@@ -1,23 +1,34 @@
 # ConsumerAffairs.com - Frontend test
 
-A Mortgage Calculator made with Javascript, CSS and HTML.
+A Mortgage Calculator made with Javascript, Sass and HTML.
 
 ## Source files
 
 All source files are in `src/` folder.
 
-### Install
+### Running
 
-Installing dependencies is only required on `dev` mode.
+Just open `public/index.html` on your browser.
+
+### Development mode
+
+Installing dependencies is required on `development` mode.
 
 ```
 npm install
 ```
 
-### Running
+```
+npm run dev
+```
 
-Option 1: Just open `public/index.html` on your browser.
-Option 2: On terminal, run `npm run dev`, then open http://localhost:8080 on your browser.
+or
+
+```
+gulp
+```
+
+then open http://localhost:8080 on your browser.
 
 ### Testing
 
@@ -33,4 +44,6 @@ Airbnb style guide
 
 Preset `env`
 
-### Known issues
+## Author
+
+Cristiano Tonel Fetter (tonel@devgrid.co.uk)
