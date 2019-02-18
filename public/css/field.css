@@ -1,0 +1,59 @@
+.field {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  height: 45px;
+  border-radius: 4px;
+  background-color: #ffffff;
+  width: 100%;
+  border: 1px solid #a6a6a6;
+  padding: 0 25px;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  font-size: 16px;
+  line-height: 18px;
+  letter-spacing: 0.3px;
+  -webkit-transition: 0.3s -webkit-box-shadow;
+  transition: 0.3s -webkit-box-shadow;
+  transition: 0.3s box-shadow;
+  transition: 0.3s box-shadow, 0.3s -webkit-box-shadow;
+}
+
+.field:focus {
+  -webkit-box-shadow: 0 0 4px 0 rgba(62, 61, 63, 0.62);
+          box-shadow: 0 0 4px 0 rgba(62, 61, 63, 0.62);
+  border-color: #3e3d3f;
+  outline: none;
+}
+
+@media (max-width: 820px) {
+  .field {
+    height: 40px;
+    padding: 0 15px;
+    font-size: 14px;
+    line-height: 16px;
+  }
+}
+
+.field--currency {
+  padding-left: 40px;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyAgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgd2lkdGg9IjEwcHgiIGhlaWdodD0iMTVweCI+PHRleHQga2VybmluZz0iYXV0byIgZm9udC1mYW1pbHk9Ik15cmlhZCBQcm8iIGZpbGw9InJnYigwLCAwLCAwKSIgZm9udC1zaXplPSIxNnB4IiB4PSIwcHgiIHk9IjEzcHgiPjx0c3BhbiBmb250LXNpemU9IjE2cHgiIGZvbnQtZmFtaWx5PSJIZWx2ZXRpY2EgTmV1ZSIgZmlsbD0iIzNFM0QzRiI+JiMzNjs8L3RzcGFuPjwvdGV4dD48L3N2Zz4=");
+  background-position: 25px 15px;
+  background-repeat: no-repeat;
+}
+
+@media (max-width: 820px) {
+  .field--currency {
+    padding-left: 30px;
+    background-position: 15px 12px;
+    background-size: 9px;
+  }
+}
+
+.field--tiny {
+  width: 60px;
+  padding: 0 5px;
+}
+
+.field--centered {
+  text-align: center;
+}

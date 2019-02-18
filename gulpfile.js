@@ -1,9 +1,15 @@
 const gulp = require('gulp');
 const sass = require('gulp-sass');
+
+const log = require('gulplog');
+const tap = require('gulp-tap');
+const buffer = require('gulp-buffer');
 const babel = require('gulp-babel');
+
 const connect = require('gulp-connect');
-const browserify = require('browserify');
 const autoprefixer = require('gulp-autoprefixer');
+
+const browserify = require('browserify');
 
 const paths = {
   sass: {
@@ -32,6 +38,21 @@ const options = {
   }
 };
 
+gulp.task('scripts', () => {
+  return gulp
+    .src('./src/**/*.js', { read: false })
+    .pipe(
+      tap(file => {
+        const fileObj = file;
+        log.info(`Bundling ${file.path}`);
+        fileObj.contents = browserify(file.path, { debug: true }).bundle();
+      })
+    )
+    .pipe(buffer())
+    .pipe(babel())
+    .pipe(gulp.dest('public'));
+});
+
 gulp.task('sass', () => {
   return gulp
     .src(paths.sass.src)
@@ -48,13 +69,13 @@ gulp.task('connect', () => {
   });
 });
 
-gulp.task('scripts', () => {
-  return gulp
-    .src(paths.scripts.src)
-    .pipe(babel())
-    .pipe(gulp.dest(paths.scripts.dest))
-    .pipe(connect.reload());
-});
+// gulp.task('scripts', () => {
+//   return gulp
+//     .src(paths.scripts.src)
+//     .pipe(babel())
+//     .pipe(gulp.dest(paths.scripts.dest))
+//     .pipe(connect.reload());
+// });
 
 gulp.task('html', () => {
   return gulp.src(paths.html.src).pipe(connect.reload());
@@ -91,7 +112,7 @@ gulp.task(
   'watch',
   () =>
     new Promise(resolve => {
-      gulp.parallel('watch:styles', 'watch:scripts', 'watch:html')();
+      gulp.parallel('watch:styles', 'watch:html', 'watch:scripts')();
       resolve();
     })
 );
@@ -100,7 +121,7 @@ gulp.task(
   'default',
   () =>
     new Promise(resolve => {
-      gulp.series('sass', 'scripts', 'html', gulp.parallel('watch', 'connect'))();
+      gulp.series('sass', 'html', 'scripts', gulp.parallel('watch', 'connect'))();
       resolve();
     })
 );

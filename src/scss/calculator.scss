@@ -1,0 +1,123 @@
+@import './variables.scss';
+
+.calculator {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  @media (max-width: $sm-breakpoint) {
+    flex-direction: column;
+  }
+}
+
+.calculator__box {
+  padding: 34px 40px 40px;
+  max-width: 470px;
+  min-width: 300px;
+  object-fit: contain;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px 2px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+
+  @media (max-width: $sm-breakpoint) {
+    padding: 20px;
+  }
+}
+
+.result-box {
+  opacity: 1;
+  z-index: 1;
+  width: 300px;
+  min-height: 440px;
+  background-color: #eaf6fa;
+  transition: 0.3s height linear;
+  .separator {
+    margin-bottom: 20px;
+  }
+  @media (max-width: $sm-breakpoint) {
+    opacity: 0;
+    width: 100%;
+    max-width: 458px;
+    margin: 0 auto;
+    height: 0;
+    overflow: hidden;
+    min-height: auto;
+    .title--3rd {
+      font-size: 12px;
+      line-height: 20px;
+    }
+    .separator {
+      margin-bottom: 16px;
+    }
+  }
+}
+
+.result-box--expanded {
+  opacity: 1;
+  min-height: auto;
+
+  .result-box__value {
+    opacity: 1;
+  }
+  @media (max-width: $sm-breakpoint) {
+    max-width: auto;
+    height: 270px;
+  }
+}
+
+.result-box__content {
+  padding: 40px;
+  @media (max-width: $sm-breakpoint) {
+    padding: 20px;
+  }
+}
+
+.result-box__item {
+  margin-bottom: 20px;
+  @media (max-width: $sm-breakpoint) {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    margin-bottom: 15px;
+    align-items: center;
+  }
+}
+
+.result-box__value {
+  font-family: $primary-font;
+  font-size: 18px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 30px;
+  letter-spacing: normal;
+  text-align: left;
+  color: $dark;
+  white-space: nowrap;
+  opacity: 0.2;
+
+  @media (max-width: $sm-breakpoint) {
+    font-size: 14px;
+    font-weight: normal;
+    line-height: normal;
+    text-align: right;
+    color: $dark;
+  }
+}
+
+.result-box__item--last {
+  margin-bottom: 0;
+  .result-box__value {
+    font-size: 22px;
+    line-height: 30px;
+  }
+
+  @media (max-width: $sm-breakpoint) {
+    .result-box__value {
+      line-height: normal;
+      font-size: 18px;
+    }
+  }
+}

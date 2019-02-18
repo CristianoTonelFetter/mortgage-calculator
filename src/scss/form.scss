@@ -1,0 +1,72 @@
+@import './variables.scss';
+
+.form-control {
+  margin-bottom: 20px;
+}
+.validation-text {
+  display: none;
+  margin-top: 1px;
+  font-size: 12px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 17px;
+  letter-spacing: 0.3px;
+  text-align: left;
+  white-space: nowrap;
+
+  @media (max-width: $sm-breakpoint) {
+    font-size: 10px;
+  }
+}
+
+.form-control--error {
+  .validation-text {
+    display: block;
+    color: $danger;
+  }
+  .field,
+  .field:focus {
+    border-color: $danger;
+  }
+  // reduces margin-bottom when validation error is shown
+  &.form-control--vmb {
+    margin-bottom: 12px;
+    @media (max-width: $sm-breakpoint) {
+      margin-bottom: 9px;
+    }
+  }
+}
+
+.form-control__label {
+  font-family: $primary-font;
+  font-size: 14px;
+  line-height: 17px;
+  margin-bottom: 5px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  letter-spacing: 0.2px;
+  text-align: left;
+  color: $dark;
+  display: block;
+
+  @media (max-width: $sm-breakpoint) {
+    font-size: 12px;
+    line-height: 15px;
+  }
+}
+
+.form-group--grid {
+  display: flex;
+  margin-left: -10px;
+  margin-right: -10px;
+}
+
+.form-group__col {
+  padding: 0 10px;
+}
+
+.form-group__col--half {
+  width: 50%;
+}

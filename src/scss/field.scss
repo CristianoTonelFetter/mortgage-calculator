@@ -1,0 +1,50 @@
+@import './variables.scss';
+
+.field {
+  font-family: $primary-font;
+  height: 45px;
+  border-radius: 4px;
+  background-color: #ffffff;
+  width: 100%;
+  border: 1px solid #a6a6a6;
+  padding: 0 25px;
+  appearance: none;
+  font-size: 16px;
+  line-height: 18px;
+  letter-spacing: 0.3px;
+  transition: 0.3s box-shadow;
+
+  &:focus {
+    box-shadow: 0 0 4px 0 rgba(62, 61, 63, 0.62);
+    border-color: $dark;
+    outline: none;
+  }
+
+  @media (max-width: $sm-breakpoint) {
+    height: 40px;
+    padding: 0 15px;
+    font-size: 14px;
+    line-height: 16px;
+  }
+}
+
+.field--currency {
+  padding-left: 40px;
+  background-image: url($currency-icon);
+  background-position: 25px 15px;
+  background-repeat: no-repeat;
+  @media (max-width: $sm-breakpoint) {
+    padding-left: 30px;
+    background-position: 15px 12px;
+    background-size: 9px;
+  }
+}
+
+.field--tiny {
+  width: 60px;
+  padding: 0 5px;
+}
+
+.field--centered {
+  text-align: center;
+}

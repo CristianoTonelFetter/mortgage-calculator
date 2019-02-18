@@ -1,5 +1,5 @@
 const assert = require('assert');
-const { PrincipleAndInterest, Tax, Insurance, MonthlyPayment } = require('../src/js/calculator');
+const { PrincipleAndInterest, Tax, Insurance, MonthlyPayment } = require('../src/js/mortgage');
 
 describe('Mortgage Calculator Tests', () => {
   it('Should calculate Principle And Interest correctly', () => {
