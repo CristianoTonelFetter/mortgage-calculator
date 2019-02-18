@@ -44,6 +44,14 @@ Airbnb style guide
 
 Preset `env`
 
+## Built With
+
+- [Gulp](http://www.dropwizard.io/1.0.2/docs/) - The web framework used.
+- [Browserify](http://browserify.org/) - Module bundler.
+- [Sass](https://sass-lang.com/) - CSS with superpowers.
+- [Babel](https://babeljs.io/) - JS transpiler (preset-env).
+- [Eslint](https://eslint.org/) - With Airbnb style guide.
+
 ## Author
 
 Cristiano Tonel Fetter (tonel@devgrid.co.uk)
