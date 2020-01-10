@@ -69,14 +69,6 @@ gulp.task('connect', () => {
   });
 });
 
-// gulp.task('scripts', () => {
-//   return gulp
-//     .src(paths.scripts.src)
-//     .pipe(babel())
-//     .pipe(gulp.dest(paths.scripts.dest))
-//     .pipe(connect.reload());
-// });
-
 gulp.task('html', () => {
   return gulp.src(paths.html.src).pipe(connect.reload());
 });
