@@ -1,5 +1,5 @@
 {
-  "name": "ca_fe_test",
+  "name": "mortgage-calculator",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,10 +8,10 @@
     "test": "mocha"
   },
   "keywords": [],
-  "author": "Cristiano Tonel Fetter <tonel@devgrid.co.uk>",
+  "author": "Cristiano Tonel Fetter <cristiano.fetter@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/CristianoTonelFetter/ca_fe_test.git"
+    "url": "git+https://github.com/CristianoTonelFetter/mortgage-calculator.git"
   },
   "license": "ISC",
   "devDependencies": {

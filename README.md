@@ -1,6 +1,6 @@
-# ConsumerAffairs.com - Frontend test
+# Mortgage Calculator
 
-A Mortgage Calculator made with Javascript, Sass and HTML.
+Made with Vanilla Javascript, Sass and HTML.
 
 ## Source files
 
@@ -34,7 +34,7 @@ or
 gulp
 ```
 
-then open http://localhost:8080 on your browser.
+then open http://localhost:3000 on your browser.
 
 ## Built With
 
@@ -46,4 +46,4 @@ then open http://localhost:8080 on your browser.
 
 ## Author
 
-Cristiano Tonel Fetter (tonel@devgrid.co.uk)
+Cristiano Tonel Fetter (cristiano.fetter@gmail.com)
