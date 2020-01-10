@@ -1,13 +1,12 @@
 const gulp = require('gulp');
 const sass = require('gulp-sass');
-
 const log = require('gulplog');
 const tap = require('gulp-tap');
 const buffer = require('gulp-buffer');
 const babel = require('gulp-babel');
-
 const connect = require('gulp-connect');
 const autoprefixer = require('gulp-autoprefixer');
+const open = require('gulp-open');
 
 const browserify = require('browserify');
 
@@ -34,7 +33,8 @@ const options = {
   },
   server: {
     root: './public',
-    livereload: true
+    livereload: true,
+    port: 3000
   }
 };
 
@@ -71,6 +71,12 @@ gulp.task('connect', () => {
 
 gulp.task('html', () => {
   return gulp.src(paths.html.src).pipe(connect.reload());
+});
+
+gulp.task('open', () => {
+  return gulp
+    .src('./public/index.html')
+    .pipe(open({ uri: `http://localhost:${options.server.port}/` }));
 });
 
 gulp.task(
@@ -113,7 +119,7 @@ gulp.task(
   'default',
   () =>
     new Promise(resolve => {
-      gulp.series('sass', 'html', 'scripts', gulp.parallel('watch', 'connect'))();
+      gulp.series('sass', 'html', 'scripts', 'open', gulp.parallel('watch', 'connect'))();
       resolve();
     })
 );
