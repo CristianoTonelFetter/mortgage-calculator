@@ -34,7 +34,7 @@ or
 gulp
 ```
 
-then open http://localhost:3000 on your browser.
+then http://localhost:3000 will open automatically on your browser.
 
 ## Built With
 
